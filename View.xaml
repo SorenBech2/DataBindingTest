@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:DataBindingTest"
+             xmlns:viewmodel="clr-namespace:DataBindingTest"
+             x:DataType="viewmodel:ViewModel"
+             x:Class="DataBindingTest.View">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30">
+            <Label Text="Testing data binding to Image!"
+                FontSize="Medium" HorizontalOptions="Center" />
+
+            <Picker Title="Pick from list" 
+                ItemsSource="{Binding SubjectList}" ItemDisplayBinding="{Binding 'Name'}" 
+                SelectedIndex ="{Binding SubjectIndex, Mode=TwoWay}" 
+                 TitleColor="DarkGray" TextColor="Black" 
+                HeightRequest="80" WidthRequest="200" HorizontalOptions="Start" VerticalOptions="Center" >
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" 
+                             Command="{Binding SubjectPickerChangedCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+            
+            <Label Text="Subject Id is:" Margin="0,10,0,0"/>
+            <Label Text="{Binding Subject.Id}" />
+
+            <Label Text="Subject Name is:" Margin="0,10,0,0"/>
+            <Label Text="{Binding Subject.Name}" />
+
+            <Label Text="Subject Image is:" Margin="0,10,0,0"/>
+            <Image Source="{Binding Subject.Picture, 
+                Mode=OneWay, TargetNullValue=camera}" 
+                Aspect="AspectFit" HeightRequest="220" WidthRequest="255" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
